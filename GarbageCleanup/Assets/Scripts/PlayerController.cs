@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -9,16 +10,23 @@ public class PlayerController : MonoBehaviour
 
     private Vector3 movement;
 
+    [Header("Raycasting")]
     private Rigidbody rb;
     public GameObject poker;
     public Camera playerCamera;
 
     public LayerMask garbage;
 
+    [Header("UI")]
+    public TextMeshProUGUI scoreText;
+    private int score;
+
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+
+        scoreText.text = $"Current Garbage: {score}";
     }
 
     private void Update()
@@ -59,6 +67,10 @@ public class PlayerController : MonoBehaviour
         {
             // If collision, destroy the object it hit
             Destroy(hit.collider.gameObject);
+
+            // Update score
+            score++;
+            scoreText.text = $"Current Garbage: {score}";
         }
     }
 }
